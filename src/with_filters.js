@@ -381,7 +381,7 @@ PixaBayApi.commentsBtn.addEventListener(
 // //
 
 //ниже настройки нотификатора comments
-//тест
+//тест !
 Notify.init({
   width: "280px",
   position: "left-bottom", // 'right-top' - 'right-bottom' - 'left-top' - 'left-bottom' - 'center-top' - 'center-bottom' - 'center-center'
