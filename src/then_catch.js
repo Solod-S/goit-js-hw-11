@@ -2,13 +2,13 @@ import "./css/styles.css";
 import "simplelightbox/dist/simple-lightbox.min.css";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 import simpleLightbox from "simplelightbox";
+import galleryTpl from "./template/images.hbs";
 let lightbox;
 
 // уведомление
 const BASE_URL = "https://pixabay.com/api/";
 // адресс для запроса
-import galleryTpl from "./template/images.hbs";
-console.log(galleryTpl);
+
 const PixaBayApi = {
   formEl: document.querySelector(".search-form"),
   inputEl: document.querySelector(".search-form-input"),
@@ -16,116 +16,138 @@ const PixaBayApi = {
   loadMoreBtnEl: document.querySelector(".load-more"),
   options: {
     key: "29776170-5db4a15cb76834f05dd09f0ed",
-    q: "",
+    query: "",
     image_type: "photo",
     orientation: "horizontal",
     safesearch: "true",
     page: 1,
     per_page: 40,
+    totalHits: null,
   },
   // объект с настройками
   onloadMore() {
-    PixaBayApi.options.page += 1;
+    this.options.page += 1;
     // для пагинации добавляем +1 страничку
-    PixaBayApi.innerMarkUp(PixaBayApi.fetchImg());
+    this.createMarkUp(this.fetchImg());
     // запускаем разметку
   },
   onSubmit(event) {
-    PixaBayApi.clearCurrentGallery();
-    // чистим разметку
-    PixaBayApi.options.page = 1;
-    // для пагинации сбрасываем на первую страничку
-    const loadMoreBtnIsNotActive =
-      PixaBayApi.loadMoreBtnEl.classList.contains("visually-hidden");
-    // кнопка не активна
-    if (loadMoreBtnIsNotActive) {
-      setTimeout(() => {
-        PixaBayApi.loadMoreBtnEl.classList.remove("visually-hidden");
-      }, 1000);
-    }
-    //  делаем копку "загрузить еще" активной активной
-
     event.preventDefault();
-    if (PixaBayApi.inputEl.value === "") {
+    this.clearCurrentGallery();
+    // чистим разметку
+    this.options.page = 1;
+    // для пагинации сбрасываем на первую страничку
+    this.options.totalHits = null;
+    // для нотификации о найденых страницах
+    this.options.query = this.inputEl.value.toLowerCase().trim();
+    // то что вбито в inputEl  приводим к нижнему регистру + тримаем
+    if (this.inputEl.value === "") {
       Notify.failure(
         "Sorry, there are no images matching your search query. Please try again"
       );
+
+      this.loadMoreBtnEl.classList.add("visually-hidden");
       return;
     }
-    // если поле пустое дальше функция не пойдет
 
-    PixaBayApi.options.q = PixaBayApi.inputEl.value.toLowerCase().trim();
-    // то что вбито в inputEl  приводим к нижнему регистру + тримаем
-    PixaBayApi.inputEl.value = "";
-    // чистим поле ввода
-    PixaBayApi.innerMarkUp(PixaBayApi.fetchImg());
-
+    this.createMarkUp(this.fetchImg());
     // запускаем функцию динамической генерации разметки в которую передаем функцию фетча с аргументами из инпута (inputEl)
+    this.loadMoreBtnEl.classList.remove("visually-hidden");
+    //  делаем копку "загрузить еще" активной активной
   },
   fetchImg() {
     return fetch(
-      `${BASE_URL}?key=${PixaBayApi.options.key}&q=${PixaBayApi.options.q}&image_type=${PixaBayApi.options.image_type}&orientation=${PixaBayApi.options.orientation}&safesearch=${PixaBayApi.options.safesearch}&page=${PixaBayApi.options.page}&per_page=${PixaBayApi.options.per_page}`
+      `${BASE_URL}?key=${this.options.key}&q=${this.options.query}&image_type=${this.options.image_type}&orientation=${this.options.orientation}&safesearch=${this.options.safesearch}&page=${this.options.page}&per_page=${this.options.per_page}`
     )
       .then((response) => {
         if (!response.ok) {
           Notify.failure(
             "Sorry, there are no images matching your search query. Please try again"
           );
+          this.loadMoreBtnEl.classList.add("visually-hidden");
           return;
         }
         // если не ок выводим ошибку и обрываем все
         return response.json();
       })
       .then((data) => {
+        if (data.totalHits > PixaBayApi.options.per_page) {
+          PixaBayApi.loadMoreBtnEl.classList.remove("visually-hidden");
+        }
+        // если объектов в промисе меньше чем на нужно показать на 1 страничке то мы прячем кнопку
         if (data.hits.length === 0) {
           Notify.failure(
             "Sorry, there are no images matching your search query. Please try again."
           );
+          this.loadMoreBtnEl.classList.add("visually-hidden");
           return;
           // если не ок выводим ошибку и обрываем все
+        } else {
+          if (!this.options.totalHits) {
+            Notify.success(`Hooray! We found ${data.totalHits} images.`);
+          }
+          this.options.totalHits = data.totalHits;
+          // чтобы в сл раз не выводило строку сколько найдено картинок (если будет новый запрос то значение обнулиться и все снова покажет)
+          return data.hits;
         }
-        console.log(data);
-        return data;
-        // если ок парсим данные в json
-      });
+        // если ок, возвращаем данные
+      })
+      .catch((error) => console.log(error));
   },
-  innerMarkUp(promise) {
+  // GET запрос на сервер
+  createMarkUp(promise) {
+    console.log(`!!!!!!`);
     promise.then((array) => {
-      console.log(array.hits);
-
-      const generatedHtml = PixaBayApi.galleryEl.insertAdjacentHTML(
+      const generatedHtml = this.galleryEl.insertAdjacentHTML(
         "beforeend",
-        galleryTpl(array.hits)
+        galleryTpl(array)
       );
       //генерируем разметку (с помощью шаблонизатора) и записываем в переменную
       // делаем это для того, чтобы после успеть обьявить lightbox
-      lightbox = new SimpleLightbox(".img-link", {
+      lightbox = new SimpleLightbox(".gallery a", {
         captionDelay: 200,
         showCounter: false,
         maxZoom: 3,
         scrollZoomFactor: 0.1,
       });
       // обьявляем lightbox
+      const totalPages = Math.floor(
+        this.options.totalHits / this.options.per_page
+      );
+      // высчитываем примерное число стрниц с округлению по низу 12.3 => 12
+      if (this.options.page > totalPages) {
+        this.loadMoreBtnEl.classList.add("visually-hidden");
+        Notify.failure(
+          "We're sorry, but you've reached the end of search results."
+        );
+      }
+      // сравниваем сл запрашиваемую страницу (которую делали для пагинации) с примерным числом страниц
+      // если мы сл запрашиваемая страница больше чем примерное число страниц,  прячем кнопку
       return generatedHtml;
-      // возвращаем Главный результат функции
+      // возвращаем главный результат функции
     });
   },
   clearCurrentGallery() {
-    PixaBayApi.galleryEl.innerHTML = "";
+    this.galleryEl.innerHTML = "";
   },
   // функция очистки разметки
 };
-// GET запрос на сервер
 
-PixaBayApi.formEl.addEventListener("submit", PixaBayApi.onSubmit);
-PixaBayApi.loadMoreBtnEl.addEventListener("click", PixaBayApi.onloadMore);
+PixaBayApi.formEl.addEventListener(
+  "submit",
+  PixaBayApi.onSubmit.bind(PixaBayApi)
+);
+PixaBayApi.loadMoreBtnEl.addEventListener(
+  "click",
+  PixaBayApi.onloadMore.bind(PixaBayApi)
+);
 //
 //
 //ниже настройки нотификатора
 
 Notify.init({
   width: "280px",
-  position: "right-bottom", // 'right-top' - 'right-bottom' - 'left-top' - 'left-bottom' - 'center-top' - 'center-bottom' - 'center-center'
+  position: "left-bottom", // 'right-top' - 'right-bottom' - 'left-top' - 'left-bottom' - 'center-top' - 'center-bottom' - 'center-center'
   distance: "10px",
   opacity: 1,
   borderRadius: "0",
@@ -154,8 +176,8 @@ Notify.init({
   fontAwesomeIconSize: "34px",
 
   success: {
-    background: "#32c682",
-    textColor: "#fff",
+    background: "#101113",
+    textColor: "#d6d6d6",
     childClassName: "notiflix-notify-success",
     notiflixIconColor: "rgba(0,0,0,0.2)",
     fontAwesomeClassName: "fas fa-check-circle",
@@ -164,7 +186,7 @@ Notify.init({
   },
 
   failure: {
-    background: "#444444",
+    background: "#101113",
     textColor: "#d6d6d6",
     childClassName: "notiflix-notify-failure",
     notiflixIconColor: "rgba(0,0,0,0.2)",

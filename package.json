@@ -4,7 +4,7 @@
     "parcel-plugin-handlebars-precompile": "^1.0.2",
     "sass": "^1.54.9"
   },
-  "name": "goit-js-hw-10",
+  "name": "goit-js-hw-11",
   "version": "1.0.0",
   "description": "my-homework",
   "main": "index.js",
@@ -38,6 +38,7 @@
     "atob": "^2.1.2",
     "aws-sign2": "^0.7.0",
     "aws4": "^1.11.0",
+    "axios": "^0.27.2",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "babel-plugin-polyfill-corejs2": "^0.3.2",
     "babel-plugin-polyfill-corejs3": "^0.5.3",
@@ -295,6 +296,7 @@
     "lodash.clone": "^4.5.0",
     "lodash.debounce": "^4.0.8",
     "lodash.memoize": "^4.1.2",
+    "lodash.reverse": "^4.0.1",
     "lodash.sortby": "^4.7.0",
     "lodash.throttle": "^4.1.1",
     "lodash.uniq": "^4.5.0",
@@ -554,17 +556,17 @@
   },
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/*.html --public-url /goit-js-hw-10/",
+    "build": "parcel build src/*.html --public-url /goit-js-hw-11/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Solod-S/goit-js-hw-10.git"
+    "url": "git+https://github.com/Solod-S/goit-js-hw-11.git"
   },
   "author": "Solod S.",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Solod-S/goit-js-hw-10/issues"
+    "url": "https://github.com/Solod-S/goit-js-hw-11/issues"
   },
-  "homepage": "https://github.com/Solod-S/goit-js-hw-10"
+  "homepage": "https://github.com/Solod-S/goit-js-hw-11"
 }
