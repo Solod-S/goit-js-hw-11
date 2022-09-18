@@ -380,7 +380,6 @@ PixaBayApi.commentsBtn.addEventListener(
 );
 // //
 
-// commentsBtn: document.querySelector('[name = "comments"]'),
 //ниже настройки нотификатора comments
 
 Notify.init({
