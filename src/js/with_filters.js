@@ -48,14 +48,17 @@ const PixaBayApi = {
 
     if (!this.options.query) {
       Notify.failure(
-        "Sorry, there are no images matching your search query. Please try again"
+        "Sorry, there are no images matching your search query. Please try again."
       );
-      this.resetfilters();
+
       this.loadMoreBtnEl.classList.add("visually-hidden");
+      this.filters.classList.add("visually-hidden");
+      this.resetfilters();
+
       return;
     }
     // если поле пустое выдаем ошибку
-
+    this.filters.classList.remove("visually-hidden");
     this.fetchAndMarkUp();
     // GET запрос на сервер + разметка
   },
@@ -74,13 +77,13 @@ const PixaBayApi = {
             "Sorry, there are no images matching your search query. Please try again."
           );
           this.loadMoreBtnEl.classList.add("visually-hidden");
+          this.filters.classList.add("visually-hidden");
           this.resetfilters();
           return;
           // если не ок выводим ошибку и обрываем все
         } else {
           //obj.data.hits === дотсупнных в бесплатном достпе найденых картинок
           PixaBayApi.searchResult = obj.data.hits;
-          console.log(PixaBayApi.searchResult);
           Notify.success(`Hooray! We found ${obj.data.totalHits} images.`);
           this.createMarkUp(PixaBayApi.searchResult);
         }
@@ -103,10 +106,8 @@ const PixaBayApi = {
     );
     const markUp = await fetch
       .then((obj) => {
-        console.log(Math.floor(obj.data.totalHits / this.options.per_page));
-        console.log(this.options.page);
         this.searchResult.push(...obj.data.hits);
-        console.log(this.searchResult);
+
         this.createMarkUp(obj.data.hits);
         const totalPages = Math.floor(
           obj.data.totalHits / this.options.per_page
@@ -162,7 +163,6 @@ const PixaBayApi = {
     }
   },
   onSortByMinDownloads() {
-    console.log(`&&`);
     if (this.searchResult === []) {
       return;
     } else {
@@ -173,7 +173,6 @@ const PixaBayApi = {
     }
   },
   onSortByMaxDownloads() {
-    console.log(`!!`);
     if (this.searchResult === []) {
       return;
     } else {
