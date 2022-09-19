@@ -6,7 +6,12 @@ import simpleLightbox from "simplelightbox";
 import galleryTpl from "../templates/images.hbs";
 
 import axios from "axios";
-let lightbox;
+let lightbox = new SimpleLightbox(".gallery a", {
+  captionDelay: 200,
+  showCounter: false,
+  maxZoom: 3,
+  scrollZoomFactor: 0.1,
+});
 const PixaBayApi = {
   formEl: document.querySelector(".search-form"),
   inputEl: document.querySelector(".search-form-input"),
@@ -113,13 +118,8 @@ const PixaBayApi = {
   createMarkUp(images) {
     this.galleryEl.insertAdjacentHTML("beforeend", galleryTpl(images));
     //генерируем разметку (с помощью шаблонизатора) и записываем в переменную
-    // делаем это для того, чтобы после успеть обьявить lightbox
-    lightbox = new SimpleLightbox(".gallery a", {
-      captionDelay: 200,
-      showCounter: false,
-      maxZoom: 3,
-      scrollZoomFactor: 0.1,
-    });
+
+    lightbox.refresh();
   },
   clearCurrentGallery() {
     this.galleryEl.innerHTML = "";
