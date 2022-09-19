@@ -4,7 +4,7 @@ const header = document.querySelector(".search-search");
 
 const scrollPosition = () =>
   window.pageYOffset || document.documentElement.scrollTop;
-const containHide = () => header.classList.contains("hide");
+const containHide = () => header.classList.contains("is-shrinked");
 
 window.addEventListener("scroll", () => {
   if (
@@ -13,10 +13,10 @@ window.addEventListener("scroll", () => {
     scrollPosition() > defaultOffset
   ) {
     //scroll down
-    header.classList.add("hide");
+    header.classList.add("is-shrinked");
   } else if (scrollPosition() < lastScroll && containHide()) {
     //scroll up
-    header.classList.remove("hide");
+    header.classList.remove("is-shrinked");
   }
 
   lastScroll = scrollPosition();
