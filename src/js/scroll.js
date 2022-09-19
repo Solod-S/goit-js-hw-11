@@ -1,5 +1,5 @@
 let lastScroll = 0;
-const defaultOffset = 200;
+const defaultOffset = 300;
 const header = document.querySelector(".search-search");
 
 const scrollPosition = () =>
