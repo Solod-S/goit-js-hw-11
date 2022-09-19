@@ -1,0 +1,225 @@
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  background-color: #d6d6d6;
+  font-family: "Roboto", sans-serif;
+}
+.search-search {
+  position: fixed;
+  width: 100%;
+  z-index: 6;
+  transition: transform 250ms linear;
+}
+.search {
+  background-color: #444444;
+  justify-content: center;
+  justify-content: space-between;
+
+  display: flex;
+  padding: 18px 50px;
+  transition: padding 250ms linear;
+}
+.search-form {
+  display: flex;
+}
+.search-form-btn {
+  width: 35px;
+  background-color: #d6d6d6;
+  background-image: url(../img/search_icon.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+.search-form-input {
+  width: 280px;
+  border: none;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  padding: 8px;
+  transition: width 250ms linear;
+}
+.search-form-logo {
+  width: 145px;
+}
+.load-more {
+  position: relative;
+
+  align-items: center;
+  margin: 60px auto;
+  padding: 8px 20px;
+  display: block;
+
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  color: #d6d6d6;
+  background-color: #444444;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  line-height: 1.88;
+  box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
+  transition: color 250ms linear, background-color 250ms linear;
+}
+
+.load-more:hover {
+  color: #444444;
+  background-color: #d6d6d6;
+}
+
+.gallery {
+  position: relative;
+  top: 58px;
+  flex-flow: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+}
+.img-link {
+  text-decoration: none;
+  transition: transform 1ms linear;
+}
+
+.img-link.aos-init.aos-animate:hover {
+  transform: scale(1.1);
+}
+.img-card {
+  background-color: #d6d6d6;
+  width: 400px;
+  height: 400px;
+
+  margin: 15px;
+
+  border-radius: 4px;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
+    1px 4px 6px rgba(0, 0, 0, 0.16);
+
+  object-fit: contain;
+  object-position: center;
+  overflow: hidden;
+}
+
+img {
+  display: block;
+  height: 70%;
+  width: 100%;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  color: #444444;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.chevron__svg {
+  margin: auto;
+  fill: #d6d6d6;
+  transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.chevron__up:hover,
+.chevron__up:hover .chevron__svg,
+.chevron__down:hover,
+.chevron__down:hover .chevron__svg {
+  fill: #d6d6d6;
+  background-color: #444444;
+  opacity: 1;
+}
+.chevron__up {
+  display: flex;
+  position: fixed;
+  right: 12px;
+  bottom: 30px;
+  width: 50px;
+  height: 50px;
+  bottom: 82px;
+  background-color: #444444;
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.4;
+}
+.chevron__down {
+  transform: rotate(180deg);
+  display: flex;
+  position: fixed;
+  right: 12px;
+
+  bottom: 30px;
+  width: 50px;
+  height: 50px;
+
+  background-color: #444444;
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.4;
+}
+.search-search.hide {
+  transform: translateY(-10px);
+}
+.search-search.hide .search {
+  padding-bottom: 10px;
+}
+.search-search.hide .filters__label {
+  font-size: 15px;
+}
+.search-search.hide .search-form-input {
+  width: 200px;
+}
+.filters {
+  display: flex;
+  align-items: center;
+}
+.likes {
+  z-index: 100;
+  position: absolute;
+}
+.filters__label {
+  position: relative;
+  display: flex;
+  align-items: end;
+  margin: 0;
+  color: #d6d6d6;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  cursor: pointer;
+}
+.filters__label:not(:last-child) {
+  margin-right: 15px;
+}
+.filters__toggl-btn {
+  margin-right: 5px;
+}
+.filters__toggl-icon {
+  fill: #d6d6df;
+  position: absolute;
+  right: -11px;
+}
+.active {
+  transform: scale(1.1);
+}
+.filters__toggl-icon.max {
+  transform: rotate(58deg);
+  right: -8px;
+}
