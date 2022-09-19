@@ -3,7 +3,12 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 import simpleLightbox from "simplelightbox";
 import galleryTpl from "../templates/images.hbs";
-let lightbox;
+let lightbox = new SimpleLightbox(".gallery a", {
+  captionDelay: 200,
+  showCounter: false,
+  maxZoom: 3,
+  scrollZoomFactor: 0.1,
+});
 
 // уведомление
 const BASE_URL = "https://pixabay.com/api/";
@@ -103,13 +108,8 @@ const PixaBayApi = {
         galleryTpl(array)
       );
       //генерируем разметку (с помощью шаблонизатора) и записываем в переменную
-      // делаем это для того, чтобы после успеть обьявить lightbox
-      lightbox = new SimpleLightbox(".gallery a", {
-        captionDelay: 200,
-        showCounter: false,
-        maxZoom: 3,
-        scrollZoomFactor: 0.1,
-      });
+
+      lightbox.refresh();
       // обьявляем lightbox
       const totalPages = Math.floor(
         this.options.totalHits / this.options.per_page
