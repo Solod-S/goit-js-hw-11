@@ -83,6 +83,14 @@ const PixaBayApi = {
           this.loadMoreBtnEl.classList.remove("visually-hidden");
         }
         // если объектов в промисе больше чем нам нужно показать на 1 страничке то мы не прячем кнопку
+        if (obj.data.hits.length < this.options.per_page) {
+          this.loadMoreBtnEl.classList.add("visually-hidden");
+        }
+        // если обьектов которые отрисовались меньше чем нам нужно отобразить то прячем кнопку
+        if (obj.data.hits.length < this.options.per_page) {
+          this.loadMoreBtnEl.classList.add("visually-hidden");
+        }
+        // если обьектов которые отрисовались меньше чем нам нужно отобразить то прячем кнопку
       })
       .catch((error) => console.log(error));
   },
@@ -97,8 +105,8 @@ const PixaBayApi = {
     );
     const markUp = await fetch
       .then((obj) => {
-        console.log(Math.floor(obj.data.totalHits / this.options.per_page));
-        console.log(this.options.page);
+        // console.log(Math.floor(obj.data.totalHits / this.options.per_page));
+        // console.log(this.options.page);
         this.createMarkUp(obj.data.hits);
         const totalPages = Math.floor(
           obj.data.totalHits / this.options.per_page

@@ -94,6 +94,10 @@ const PixaBayApi = {
           }
           this.options.totalHits = data.totalHits;
           // чтобы в сл раз не выводило строку сколько найдено картинок (если будет новый запрос то значение обнулиться и все снова покажет)
+          if (data.hits.length < this.options.per_page) {
+            this.loadMoreBtnEl.classList.add("visually-hidden");
+          }
+          // если обьектов которые отрисовались меньше чем нам нужно отобразить то прячем кнопку
           return data.hits;
         }
         // если ок, возвращаем данные
@@ -102,7 +106,6 @@ const PixaBayApi = {
   },
   // GET запрос на сервер
   createMarkUp(promise) {
-    console.log(`!!!!!!`);
     promise.then((array) => {
       const generatedHtml = this.galleryEl.insertAdjacentHTML(
         "beforeend",
