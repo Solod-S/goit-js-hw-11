@@ -90,6 +90,7 @@ const PixaBayApi = {
         } else {
           //obj.data.hits === дотсупнных в бесплатном достпе найденых картинок
           PixaBayApi.searchResult = obj.data.hits;
+
           Notify.success(`Hooray! We found ${obj.data.totalHits} images.`);
           this.createMarkUp(PixaBayApi.searchResult);
         }
@@ -98,6 +99,10 @@ const PixaBayApi = {
           this.loadMoreBtnEl.classList.remove("visually-hidden");
         }
         // если объектов в промисе больше чем нам нужно показать на 1 страничке то мы не прячем кнопку
+        if (obj.data.hits.length < this.options.per_page) {
+          this.loadMoreBtnEl.classList.add("visually-hidden");
+        }
+        // если обьектов которые отрисовались меньше чем нам нужно отобразить то прячем кнопку
       })
       .catch((error) => console.log(error));
   },
