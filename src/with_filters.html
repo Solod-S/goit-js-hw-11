@@ -21,8 +21,9 @@
   <body id="up">
     <div class="search-search">
       <section class="search">
-        <div>
+        <div class="search-form-api-wrapper">
           <a
+            class="search-form-api-link"
             href="https://pixabay.com/api/docs/"
             target="_blank"
             rel="noopener noreferrer nofollow"
@@ -99,6 +100,60 @@
           <button type="submit" class="search-form-btn"></button>
         </form>
       </section>
+      <form action="" class="filters visually-hidden">
+        <label class="filters__label">
+          <span class="filters__toggl-btn">Likes</span>
+          <input
+            class="filters__checkbox visually-hidden"
+            type="checkbox"
+            data-status="off"
+            name="likes"
+          />
+
+          <svg class="filters__toggl-icon" width="14px" height="14px">
+            <use href="./img/symbol-defs.svg#icon-toggl"></use>
+          </svg>
+        </label>
+        <label class="filters__label">
+          <span class="filters__toggl-btn">Downloads</span>
+          <input
+            class="filters__checkbox visually-hidden"
+            type="checkbox"
+            data-status="off"
+            name="downloads"
+          />
+
+          <svg class="filters__toggl-icon" width="14px" height="14px">
+            <use href="./img/symbol-defs.svg#icon-toggl"></use>
+          </svg>
+        </label>
+        <label class="filters__label">
+          <span class="filters__toggl-btn">Views</span>
+          <input
+            class="filters__checkbox visually-hidden"
+            type="checkbox"
+            data-status="off"
+            name="views"
+          />
+
+          <svg class="filters__toggl-icon" width="14px" height="14px">
+            <use href="./img/symbol-defs.svg#icon-toggl"></use>
+          </svg>
+        </label>
+        <label class="filters__label">
+          <span class="filters__toggl-btn">Comments</span>
+          <input
+            class="filters__checkbox visually-hidden"
+            type="checkbox"
+            data-status="off"
+            name="comments"
+          />
+
+          <svg class="filters__toggl-icon" width="14px" height="14px">
+            <use href="./img/symbol-defs.svg#icon-toggl"></use>
+          </svg>
+        </label>
+      </form>
     </div>
     <div class="gallery"></div>
     <button type="button" class="load-more visually-hidden">Load more</button>

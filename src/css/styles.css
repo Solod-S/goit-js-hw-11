@@ -6,6 +6,7 @@ body {
   background-color: #d6d6d6;
   font-family: "Roboto", sans-serif;
 }
+
 .search-search {
   position: fixed;
   width: 100%;
@@ -43,8 +44,17 @@ body {
   padding: 8px;
   transition: width 250ms linear;
 }
+
+.search-form-api-wrapper {
+  display: flex;
+  align-items: center;
+}
+.search-form-api-link {
+  margin-right: 10px;
+  display: block;
+}
 .search-form-logo {
-  width: 145px;
+  max-width: 145px;
 }
 .load-more {
   position: relative;
@@ -185,11 +195,12 @@ img {
   font-size: 15px;
 }
 .search-search.is-shrinked .search-form-input {
-  width: 200px;
+  width: 100px;
 }
 .filters {
   display: flex;
   align-items: center;
+  margin-right: 12px;
 }
 .likes {
   z-index: 100;
@@ -222,4 +233,36 @@ img {
 .filters__toggl-icon.max {
   transform: rotate(58deg);
   right: -8px;
+}
+@media (min-width: 1200px) {
+  .search {
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 850px) {
+  .filters__label {
+    font-size: 12px;
+  }
+  .search-form-input {
+    max-width: 160px;
+  }
+
+  .search-search.is-shrinked .filters__label {
+    font-size: 10px;
+  }
+}
+@media screen and (min-width: 320px) and (max-width: 620px) {
+  .filters__label.search-form-api-wrapper {
+    display: none;
+  }
+  .search-form-input {
+    max-width: 45px;
+  }
+  .search {
+    justify-content: center;
+  }
+  .chevron {
+    display: none;
+  }
 }
