@@ -1,7 +1,7 @@
 import "../css/styles.css";
 import "simplelightbox/dist/simple-lightbox.min.css";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
-import lightboxOptions from "./lightbox_options";
+import options from "./lightbox_options";
 import simpleLightbox from "simplelightbox";
 import galleryTpl from "../templates/images.hbs";
 
@@ -11,6 +11,7 @@ let lightbox = new SimpleLightbox(".gallery a", {
   showCounter: false,
   maxZoom: 3,
   scrollZoomFactor: 0.1,
+  // sourceAttr: "ligh",
 });
 const PixaBayApi = {
   formEl: document.querySelector(".search-form"),
